@@ -1,5 +1,7 @@
 require "json"
 require "time"
+require "open3"
+require "yaml"
 require "logger"
 
 module Keyboardio2mqtt
@@ -23,6 +25,8 @@ module Keyboardio2mqtt
   end
 end
 
+require "keyboardio2mqtt/secret"
+require "keyboardio2mqtt/configuration"
 require "keyboardio2mqtt/clock"
 require "keyboardio2mqtt/colour"
 require "keyboardio2mqtt/availability_light"
