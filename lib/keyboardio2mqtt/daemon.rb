@@ -9,15 +9,23 @@ module Keyboardio2mqtt
     end
 
     def run
+      @broker.connect(reporting_availability_on: Topics.daemon_availability)
       look_around
       @broker.listen
     end
 
     def look_around
-      @finder.attached_keyboards.each { |keyboard| take_commands_for(keyboard) }
+      @finder.attached_keyboards.each { |keyboard| arrive(keyboard) }
     end
 
     private
+
+    def arrive(keyboard)
+      @broker.announce(**Announcement.new(keyboard).to_home_assistant)
+      take_commands_for(keyboard)
+      @broker.report(topics_for(keyboard.identity).availability, ONLINE)
+      Keyboardio2mqtt.logger.info("found the keyboard #{keyboard.identity}, calling it #{keyboard.name.inspect}")
+    end
 
     def take_commands_for(keyboard)
       @broker.on_command(topics_for(keyboard.identity).command_for(keyboard.light)) do |payload|

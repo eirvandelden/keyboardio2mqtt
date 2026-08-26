@@ -14,6 +14,10 @@ module Keyboardio2mqtt
       @on = false
     end
 
+    def name
+      WHAT_IT_IS
+    end
+
     def topic_name
       WHAT_IT_IS.tr(" ", "_")
     end

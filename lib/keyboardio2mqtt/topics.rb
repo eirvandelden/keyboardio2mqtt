@@ -1,8 +1,16 @@
 module Keyboardio2mqtt
   # Where one keyboard's commands arrive and its state is reported.
   class Topics
+    def self.daemon_availability
+      "#{NAME}/availability"
+    end
+
     def initialize(identity)
       @identity = identity
+    end
+
+    def availability
+      "#{NAME}/#{@identity}/availability"
     end
 
     def command_for(light)
