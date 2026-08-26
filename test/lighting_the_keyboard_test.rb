@@ -9,7 +9,8 @@ class LightingTheKeyboardTest < Minitest::Test
     @broker = StandInBroker.new
     keyboard = Keyboardio2mqtt::Keyboard.new(identity: "65644FE61339", port: @port)
 
-    Keyboardio2mqtt::Daemon.new(finder: StandInFinder.new(keyboard), broker: @broker).run
+    Keyboardio2mqtt::Daemon.new(finder: StandInFinder.new(keyboard), broker: @broker,
+                                memory: StandInMemory.new, clock: StandInClock.new).run
   end
 
   def test_the_daemon_listens_for_commands_for_as_long_as_it_runs

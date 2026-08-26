@@ -9,6 +9,10 @@ class StandInFiles
     @opened = []
   end
 
+  def released
+    @held_by_somebody_else = false
+  end
+
   def open(_path, _mode)
     raise Errno::EBUSY if @held_by_somebody_else
 

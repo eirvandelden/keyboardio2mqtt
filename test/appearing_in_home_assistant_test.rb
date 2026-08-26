@@ -5,7 +5,8 @@ class AppearingInHomeAssistantTest < Minitest::Test
     @broker = StandInBroker.new
     keyboard = Keyboardio2mqtt::Keyboard.new(identity: "65644FE61339", port: StandInPort.new)
 
-    Keyboardio2mqtt::Daemon.new(finder: StandInFinder.new(keyboard), broker: @broker).run
+    Keyboardio2mqtt::Daemon.new(finder: StandInFinder.new(keyboard), broker: @broker,
+                                memory: StandInMemory.new, clock: StandInClock.new).run
   end
 
   def test_a_keyboard_that_is_plugged_in_appears_in_home_assistant_as_one_device
@@ -49,7 +50,8 @@ class AppearingInHomeAssistantTest < Minitest::Test
     keyboard = Keyboardio2mqtt::Keyboard.new(identity: "65644FE61339", name: "Desk keyboard",
                                              port: StandInPort.new)
 
-    Keyboardio2mqtt::Daemon.new(finder: StandInFinder.new(keyboard), broker: broker).run
+    Keyboardio2mqtt::Daemon.new(finder: StandInFinder.new(keyboard), broker: broker,
+                                memory: StandInMemory.new, clock: StandInClock.new).run
 
     assert_equal "Desk keyboard", broker.announcement[:device][:name]
   end

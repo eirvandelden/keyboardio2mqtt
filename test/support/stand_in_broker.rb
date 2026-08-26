@@ -7,6 +7,7 @@ class StandInBroker
     @listeners = {}
     @reports = {}
     @announcements = []
+    @forgotten = []
   end
 
   def connect(reporting_availability_on:)
@@ -19,6 +20,14 @@ class StandInBroker
 
   def announcement
     @announcements.last
+  end
+
+  def forget(device_id)
+    @forgotten << device_id
+  end
+
+  def forgotten?(device_id)
+    @forgotten.include?(device_id)
   end
 
   def on_command(topic, &listener)
@@ -40,6 +49,14 @@ class StandInBroker
   def deliver(topic, payload)
     listener = @listeners.fetch(topic) { raise "nobody is listening to #{topic}" }
     listener.call(payload)
+  end
+
+  def forget_what_was_reported(topic)
+    @reports.delete(topic)
+  end
+
+  def reported?(topic)
+    @reports.key?(topic)
   end
 
   def reported(topic)

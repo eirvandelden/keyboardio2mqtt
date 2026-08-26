@@ -47,6 +47,19 @@ class LeavingThePortAloneTest < Minitest::Test
                  @broker.reported_settings(STATE_TOPIC))
   end
 
+  def test_a_colour_that_could_not_be_sent_goes_out_on_a_later_round
+    held = StandInFiles.new(held_by_somebody_else: true)
+
+    what_the_daemon_says do
+      daemon_reaching_the_keyboard_through(held)
+      ask_for RED
+      held.released
+      @daemon.look_around
+    end
+
+    assert_equal [ "availability.color 255 0 0" ], held.written
+  end
+
   def test_a_port_another_program_is_holding_says_so_rather_than_failing_quietly
     said = what_the_daemon_says do
       daemon_reaching_the_keyboard_through(StandInFiles.new(held_by_somebody_else: true))
@@ -62,7 +75,9 @@ class LeavingThePortAloneTest < Minitest::Test
     keyboard = Keyboardio2mqtt::Keyboard.new(identity: "65644FE61339",
                                              port: Keyboardio2mqtt::FocusPort.new(PORT, files: files))
 
-    Keyboardio2mqtt::Daemon.new(finder: StandInFinder.new(keyboard), broker: @broker).run
+    @daemon = Keyboardio2mqtt::Daemon.new(finder: StandInFinder.new(keyboard), broker: @broker,
+                                          memory: StandInMemory.new, clock: StandInClock.new)
+    @daemon.run
   end
 
   def what_the_daemon_says

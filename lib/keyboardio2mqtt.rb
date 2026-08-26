@@ -1,4 +1,5 @@
 require "json"
+require "time"
 require "logger"
 
 module Keyboardio2mqtt
@@ -22,6 +23,7 @@ module Keyboardio2mqtt
   end
 end
 
+require "keyboardio2mqtt/clock"
 require "keyboardio2mqtt/colour"
 require "keyboardio2mqtt/availability_light"
 require "keyboardio2mqtt/light_command"

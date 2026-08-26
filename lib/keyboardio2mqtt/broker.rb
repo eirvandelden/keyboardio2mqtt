@@ -21,6 +21,12 @@ module Keyboardio2mqtt
       @client.publish(announcement_topic(device_id), JSON.generate(described), retain: true, qos: 1)
     end
 
+    # An empty retained payload on the announcement topic is how Home Assistant is
+    # told to drop the device and its light.
+    def forget(device_id)
+      @client.publish(announcement_topic(device_id), "", retain: true, qos: 1)
+    end
+
     def on_command(topic, &listener)
       @listeners[topic] = listener
       @client.subscribe(topic)
