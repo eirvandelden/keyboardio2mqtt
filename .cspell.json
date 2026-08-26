@@ -1,0 +1,34 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "keyboardio",
+    "Keyboardio",
+    "keyboardio2mqtt",
+    "Kaleidoscope",
+    "Chrysalis",
+    "ioreg",
+    "usbmodem",
+    "EBUSY",
+    "mqtt",
+    "ccutrer",
+    "homeassistant",
+    "launchd",
+    "launchctl",
+    "onepassword",
+    "eirvandelden",
+    "etienne",
+    "vandelden",
+    "minitest",
+    "rubocop",
+    "bundler",
+    "Gemfile",
+    "Rakefile"
+  ],
+  "ignorePaths": [
+    ".git",
+    ".worktrees",
+    "tmp",
+    "vendor"
+  ]
+}
