@@ -21,6 +21,7 @@ end
 require "keyboardio2mqtt/colour"
 require "keyboardio2mqtt/availability_light"
 require "keyboardio2mqtt/light_command"
+require "keyboardio2mqtt/focus_port"
 require "keyboardio2mqtt/keyboard"
 require "keyboardio2mqtt/topics"
 require "keyboardio2mqtt/daemon"
