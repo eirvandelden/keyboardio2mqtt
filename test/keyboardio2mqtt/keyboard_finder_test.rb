@@ -53,8 +53,8 @@ class KeyboardFinderTest < Minitest::Test
   end
 
   def test_a_keyboard_is_called_what_the_configuration_calls_it
-    finder = finding(WITH_THE_KEYBOARD,
-                     configuration: Keyboardio2mqtt::Configuration.new("keyboards" => { SERIAL_NUMBER => "Desk keyboard" }))
+    named = Keyboardio2mqtt::Configuration.new("keyboards" => { SERIAL_NUMBER => "Desk keyboard" })
+    finder = finding(WITH_THE_KEYBOARD, configuration: named)
 
     assert_equal [ "Desk keyboard" ], finder.attached_keyboards.map(&:name)
   end

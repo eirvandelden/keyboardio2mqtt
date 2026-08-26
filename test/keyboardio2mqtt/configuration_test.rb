@@ -40,7 +40,9 @@ class ConfigurationTest < Minitest::Test
   end
 
   def test_a_keyboard_can_be_given_a_name_a_person_would_recognise
-    assert_equal "Desk keyboard", configured("keyboards" => { "65644FE61339" => "Desk keyboard" }).name_for("65644FE61339")
+    configuration = configured("keyboards" => { "65644FE61339" => "Desk keyboard" })
+
+    assert_equal "Desk keyboard", configuration.name_for("65644FE61339")
   end
 
   def test_a_keyboard_nobody_has_named_has_no_name_of_its_own
