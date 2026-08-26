@@ -9,6 +9,10 @@ class StandInShell
     @success = success
   end
 
+  def says(output)
+    @output = output
+  end
+
   def capture2(*command)
     @ran = command
 
