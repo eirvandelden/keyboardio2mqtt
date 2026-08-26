@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  A LaunchAgent, not a LaunchDaemon: the daemon needs the logged-in user's
+  1Password session to read the broker password, and their access to the
+  keyboard's serial port. Copy to ~/Library/LaunchAgents/ and replace CHECKOUT
+  and USERNAME.
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>nl.eirvandelden.keyboardio2mqtt</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/USERNAME/.local/share/rv/shims/ruby</string>
+    <string>CHECKOUT/bin/keyboardio2mqtt</string>
+    <string>--config</string>
+    <string>/Users/USERNAME/.config/keyboardio2mqtt/config.yml</string>
+  </array>
+
+  <key>WorkingDirectory</key>
+  <string>CHECKOUT</string>
+
+  <key>RunAtLoad</key>
+  <true/>
+
+  <key>KeepAlive</key>
+  <true/>
+
+  <key>StandardOutPath</key>
+  <string>/Users/USERNAME/Library/Logs/keyboardio2mqtt.log</string>
+
+  <key>StandardErrorPath</key>
+  <string>/Users/USERNAME/Library/Logs/keyboardio2mqtt.log</string>
+</dict>
+</plist>

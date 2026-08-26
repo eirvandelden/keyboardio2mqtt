@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "optparse"
+require "mqtt"
+
+$LOAD_PATH.unshift File.expand_path("../lib", __dir__)
+require "keyboardio2mqtt"
+
+configuration_path = nil
+
+OptionParser.new do |options|
+  options.banner = "Usage: keyboardio2mqtt --config PATH"
+  options.on("-c", "--config PATH", "the configuration file to read") { |path| configuration_path = path }
+end.parse!
+
+abort("keyboardio2mqtt needs a configuration file: keyboardio2mqtt --config PATH") unless configuration_path
+
+configuration = Keyboardio2mqtt::Configuration.read(configuration_path)
+Keyboardio2mqtt.logger.level = configuration.log_level
+
+client = MQTT::Client.new(
+  host: configuration.broker_host,
+  port: configuration.broker_port,
+  username: configuration.broker_username.reveal,
+  password: configuration.broker_password.reveal,
+  client_id: Keyboardio2mqtt::NAME
+)
+
+Keyboardio2mqtt::Daemon.new(
+  finder: Keyboardio2mqtt::KeyboardFinder.new(configuration: configuration),
+  broker: Keyboardio2mqtt::Broker.new(client),
+  memory: Keyboardio2mqtt::RememberedState.new(configuration.state_file)
+).run
